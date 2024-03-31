@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Cache dependencies to speed up subsequent builds
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      # Build the library
+      - name: Build
+        run: cargo build --verbose
+
+      # Run tests
+      - name: Run tests
+        run: cargo test --verbose
+
+      # Run static analysis with clippy
+      - name: Run clippy
+        run: cargo clippy --all -- -D warnings

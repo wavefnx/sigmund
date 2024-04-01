@@ -12,17 +12,17 @@ pub enum AddressError {
     ///
     /// The usize field stores the actual length of the provided address.
     #[error("Invalid address length: {0}, expected 42 characters.")]
-    InvalidAddressLength(usize),
+    Length(usize),
 
     /// Error for addresses that do not start with the "0x" prefix.
     #[error("Address must start with 0x")]
-    InvalidAddressPrefix,
+    Prefix,
 
     /// Error for addresses that are not valid hexadecimal strings
     /// after the "0x" prefix. This error means that the address contains
     /// characters outside the range of valid hexadecimal digits.
     #[error("Address must be a valid hex string")]
-    InvalidAddressHex,
+    Hex,
 }
 
 /// A struct representing a validated EVM address.
@@ -59,18 +59,18 @@ impl Address {
     pub fn validate(address: &str) -> Result<(), AddressError> {
         if address.len() != 42 {
             // Return an error if the address length is not 42 characters
-            return Err(AddressError::InvalidAddressLength(address.len()));
+            return Err(AddressError::Length(address.len()));
         }
 
         if !address.starts_with("0x") {
             // Return an error if the address does not start with "0x"
-            return Err(AddressError::InvalidAddressPrefix);
+            return Err(AddressError::Prefix);
         }
 
         // Attempt to decode the hexadecimal part of the address (after "0x").
         // If decoding fails, it means the address contains non-hex characters.
         if hex::decode(&address[2..]).is_err() {
-            return Err(AddressError::InvalidAddressHex);
+            return Err(AddressError::Hex);
         }
 
         Ok(())

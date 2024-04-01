@@ -1,26 +1,26 @@
 [package]
 name = "sigmund"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["wavefnx @wavefnx"]
-description = "A tool for collecting and decoding function selectors and signatures from on-chain EVM bytecode."
+description = "A tool for collecting function selectors and decoding signatures from on-chain EVM bytecode."
 
 [dependencies]
 # ser/de
 serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
 # async
 tokio = { version = "1.37.0", features = ["rt-multi-thread", "macros"] }
 futures = "0.3.30"
 # errors
 thiserror = "1.0.58"
 # cli
-clap = "4.5.4"
+clap = { version = "4.5.4", features = ["derive"] }
 # encoding
 hex = "0.4.3"
 # http
 reqwest = { version = "0.12.2", default-features = false, features = [
     "native-tls",
-    "json",
 ] }
 
 

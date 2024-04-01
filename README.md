@@ -44,17 +44,17 @@ cargo build --release
 
 ## Usage
 ```
-A tool for collecting and decoding function selectors and signatures from on-chain EVM bytecode.
+A tool for quickly collecting function selectors and decoding signatures from on-chain EVM bytecode
 
-Usage: sigmund [OPTIONS] <--selectors|--decode> <address>
-
-Arguments:
-  <address>  The address of the EVM contract
+Usage: sigmund [OPTIONS] <--address <ADDRESS>|--file <FILE>>
 
 Options:
-  -s, --selectors          Collect the 4-byte selectors from a contract's bytecode
-  -d, --decode             Get the decoded functions signatures from a contract's bytecode
-      --rpc-url <rpc-url>  Optional argument for specifying the RPC URL (defaults to Mainnet)
+  -o, --output <OUTPUT>    Export the signatures as a JSON file
+      --signatures         Collect all known function signatures from the contract's selectors
+      --address <ADDRESS>  The address of the EVM contract
+  -f, --file <FILE>        Path to a local file containing the contract's bytecode
+      --most-probable      Return only the signatures with the highest probability of being correct
+      --rpc-url <RPC_URL>  To use your own Node or collect bytecode from a different network, provide the relevant RPC URL [default: https://ethereum-rpc.publicnode.com]
   -h, --help               Print help
   -V, --version            Print version
 ```
@@ -62,17 +62,28 @@ Options:
 ## Examples
 
 ```sh
-# Get the function selectors for an unverified contract on Mainnet
-sigmund --selectors 0x0000130d512ca69ca38add5b9ab2f9deff95c882
+# Get function selectors for an unverified contract on Mainnet
+sigmund --address 0x0000130d512ca69ca38add5b9ab2f9deff95c882
 # {"8da5cb5b", "3aeebedb", "c6723cc9", ...}
 
-# Get the function signatures for an unverified contract on Mainnet
-sigmund --decode 0x0000130d512ca69ca38add5b9ab2f9deff95c882
-# [0:8da5cb5b]: owner()
-# [0:c86283c8]: withdrawTo(uint256,address)
+# Get function selectors from a local file containing the bytecode
+sigmund --file bytecode.txt
+# {"7b6e0f15", "3aeebedb", "b603cd80", ...}
 
-# You can use `Sigmund` in any EVM network by setting the --rpc-url to that provider
-sigmund <--selectors | --decode> --rpc-url <rpc_provider> <contract_address>
+# Get function signatures for an unverified contract on Mainnet
+# Similarly, for a local file just point to that file's path
+sigmund --signatures --address 0x0000130d512ca69ca38add5b9ab2f9deff95c882
+# [8da5cb5b]: owner()
+# [c86283c8]: withdrawTo(uint256,address)
+
+# To generate a `json` output, you can use any combination 
+# as long as the input <--file | --address> is provided
+sigmund --file bytecode.txt --output example.json
+# { "selectors": Vec<String> , "signatures": <Vec<Signatures>) }
+
+# You can use `Sigmund` in any EVM network
+# by setting the --rpc-url to the relevant provider
+sigmund --rpc-url <rpc-provider> <--signatures?> <--file <path>| --address <address>> 
 ```
 
 ## Aknowledgements

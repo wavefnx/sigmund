@@ -1,4 +1,4 @@
-use std::{collections::HashSet, ops::Deref};
+use std::{collections::HashSet, ops::Deref, path::PathBuf};
 
 /// A struct that in this context, represents the bytecode of a smart contract.
 pub struct Bytecode {
@@ -53,6 +53,26 @@ impl TryFrom<String> for Bytecode {
     fn try_from(bytecode: String) -> Result<Self, Self::Error> {
         let inner = hex::decode(bytecode.trim_start_matches("0x"))?;
         Ok(Self { inner })
+    }
+}
+
+impl TryFrom<&PathBuf> for Bytecode {
+    type Error = Box<dyn std::error::Error>;
+
+    /// Tries to create a `Bytecode` instance from a file.
+    ///
+    /// Read the file at the given path and attempt to decode the contents
+    /// as hexadecimal bytecode.
+    ///
+    /// Arguments:
+    /// `path`: A `PathBuf` representing the path to the file containing the bytecode.
+    ///
+    /// Returns:
+    /// `Result<Bytecode, Box<dyn std::error::Error>>` - Ok if the decoding is successful,
+    /// and an error if the file is not found or the contents are not a valid hexadecimal.
+    fn try_from(path: &PathBuf) -> Result<Self, Self::Error> {
+        let bytecode = std::fs::read_to_string(path)?;
+        Bytecode::try_from(bytecode.trim().to_string())
     }
 }
 

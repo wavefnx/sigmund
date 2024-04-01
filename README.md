@@ -28,7 +28,7 @@ Backward compatibility is not guaranteed and the package is intentionally not pu
 
 Contributions are welcome. Users are encouraged to submit pull requests, fork, or alter the code in accordance with the terms outlined in the [LICENSE](LICENSE).
 
-It's suggested that the `decode` argument is used deliberately to not overload the external function signature API.
+It's suggested that the `signatures` argument is used deliberately to not overload the external function signature API.
 
 ## Tests
 To run the implemented tests, execute the following command at the root of the repository:  
@@ -53,7 +53,7 @@ Options:
       --signatures         Collect all known function signatures from the contract's selectors
       --address <ADDRESS>  The address of the EVM contract
   -f, --file <FILE>        Path to a local file containing the contract's bytecode
-      --most-probable      Return only the signatures with the highest probability of being correct
+      --most-common        Return only the signatures with the highest probability of being correct
       --rpc-url <RPC_URL>  To use your own Node or collect bytecode from a different network, provide the relevant RPC URL [default: https://ethereum-rpc.publicnode.com]
   -h, --help               Print help
   -V, --version            Print version

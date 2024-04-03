@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 /// A tool for quickly collecting function selectors and decoding signatures from on-chain EVM bytecode.
 #[derive(Parser, Debug, Serialize)]
-#[clap(version = "0.2.0", author = "wavefnx @wavefnx")]
+#[clap(version = crate::VERSION, author = "wavefnx @wavefnx")]
 #[clap(group(ArgGroup::new("input").args(&["address", "file"]).required(true)))]
 pub struct Config {
     /// Export the signatures as a JSON file

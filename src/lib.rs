@@ -1,3 +1,4 @@
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 const DEFAULT_RPC_URL: &str = "https://ethereum-rpc.publicnode.com";
 
 pub mod config;

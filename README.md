@@ -53,7 +53,7 @@ Options:
       --signatures         Collect all known function signatures from the contract's selectors
       --address <ADDRESS>  The address of the EVM contract
   -f, --file <FILE>        Path to a local file containing the contract's bytecode
-      --most-common        Return only the signatures with the highest probability of being correct
+      --all-matches        Return all available signature matches for each selector
       --rpc-url <RPC_URL>  To use your own Node or collect bytecode from a different network, provide the relevant RPC URL [default: https://ethereum-rpc.publicnode.com]
   -h, --help               Print help
   -V, --version            Print version

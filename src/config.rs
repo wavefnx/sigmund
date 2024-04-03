@@ -23,9 +23,9 @@ pub struct Config {
     #[clap(short = 'f', long, value_parser)]
     pub file: Option<PathBuf>,
 
-    /// Return only the signatures with the highest probability of being correct
+    /// Return all available signature matches for each selector
     #[clap(long, action = clap::ArgAction::SetTrue, requires = "signatures")]
-    pub most_common: bool,
+    pub all_matches: bool,
 
     /// To use your own Node or collect bytecode from a different network, provide the relevant RPC URL.
     #[clap(long, default_value = crate::DEFAULT_RPC_URL)]

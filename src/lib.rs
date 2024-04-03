@@ -120,7 +120,7 @@ impl Sigmund {
 
         let signatures = if self.config.signatures {
             // Collect all signatures that exist in the database
-            let signatures = self.client.get_signatures(&selectors, self.config.most_common).await;
+            let signatures = self.client.get_signatures(&selectors, self.config.all_matches).await;
             let signatures = signatures.map_err(|e| e.to_string())?;
             // Print the formatted signatures to the console
             signatures.iter().for_each(|s| println!("{}", s));

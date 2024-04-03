@@ -128,8 +128,8 @@ impl Client {
                 // #![INFO]: the first item will always exist since successful responses always contain at least one
                 // Additionally, the current API returns responses ordered by the highest count.
                 // When we switch to a `SignatureProvider` trait, this should be handled there.
-                true => signatures.push(Signature::from(response.items.first().unwrap_or(&SignatureItem::default()))),
-                false => response.items.into_iter().for_each(|item| signatures.push(Signature::from(item))),
+                true => response.items.into_iter().for_each(|item| signatures.push(Signature::from(item))),
+                false => signatures.push(Signature::from(response.items.first().unwrap_or(&SignatureItem::default()))),
             }
         }
 

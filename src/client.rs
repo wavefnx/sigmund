@@ -125,11 +125,12 @@ impl Client {
 
         for response in successful {
             match most_common {
-                // #![INFO]: the first item will always exist since successful responses always contain at least one
-                // Additionally, the current API returns responses ordered by the highest count.
-                // When we switch to a `SignatureProvider` trait, this should be handled there.
-                true => signatures.push(Signature::from(response.items.first().unwrap_or(&SignatureItem::default()))),
-                false => response.items.into_iter().for_each(|item| signatures.push(Signature::from(item))),
+                // The first item will always exist since successful responses always contain at least one signature or return 404,
+                // additionally, the current API returns signatures ordered by the ones that are encountered the most.
+                //
+                // Both of these cases are API specific and should be managed when the `SignatureProvider` trait is implemented.
+                true => response.items.into_iter().for_each(|item| signatures.push(Signature::from(item))),
+                false => signatures.push(Signature::from(response.items.first().unwrap_or(&SignatureItem::default()))),
             }
         }
 

@@ -49,11 +49,12 @@ A tool for quickly collecting function selectors and decoding signatures from on
 Usage: sigmund [OPTIONS] <--address <ADDRESS>|--file <FILE>>
 
 Options:
-  -o, --output <OUTPUT>    Export the signatures as a JSON file
+  -o, --output <OUTPUT>    Path to export the signatures as a JSON file
       --signatures         Collect all known function signatures from the contract's selectors
       --address <ADDRESS>  The address of the EVM contract
   -f, --file <FILE>        Path to a local file containing the contract's bytecode
-      --most-common        Return only the signatures with the highest probability of being correct
+      --deep               Collect all four-byte pushes (fn, err, ...), including non-selectors
+      --all-matches        Return all available signature matches for each selector
       --rpc-url <RPC_URL>  To use your own Node or collect bytecode from a different network, provide the relevant RPC URL [default: https://ethereum-rpc.publicnode.com]
   -h, --help               Print help
   -V, --version            Print version

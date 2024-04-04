@@ -7,7 +7,7 @@ use std::path::PathBuf;
 #[clap(version = crate::VERSION, author = "wavefnx @wavefnx")]
 #[clap(group(ArgGroup::new("input").args(&["address", "file"]).required(true)))]
 pub struct Config {
-    /// Export the signatures as a JSON file
+    /// Path to export the signatures as a JSON file
     #[clap(short = 'o', long, value_parser)]
     pub output: Option<PathBuf>,
 
@@ -23,9 +23,13 @@ pub struct Config {
     #[clap(short = 'f', long, value_parser)]
     pub file: Option<PathBuf>,
 
-    /// Return only the signatures with the highest probability of being correct
+    /// Collect all four-byte pushes (fn, err, ...), including non-selectors
+    #[clap(long, action = clap::ArgAction::SetTrue)]
+    pub deep: bool,
+
+    /// Return all available signature matches for each selector
     #[clap(long, action = clap::ArgAction::SetTrue, requires = "signatures")]
-    pub most_common: bool,
+    pub all_matches: bool,
 
     /// To use your own Node or collect bytecode from a different network, provide the relevant RPC URL.
     #[clap(long, default_value = crate::DEFAULT_RPC_URL)]

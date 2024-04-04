@@ -16,18 +16,17 @@ fn it_fails_to_create_bytecode_from_invalid_input() {
 
 #[test]
 fn it_finds_function_signatures() {
-    let hex_with_signatures = "0x578063340a95345780636c5f90bb".to_string();
+    let hex_with_signatures = "0xe01c63ddc632621461".to_string();
     let bytecode = Bytecode::try_from(hex_with_signatures).unwrap();
-    let signatures = bytecode.find_function_selectors();
-    assert_eq!(signatures.len(), 2);
-    assert!(signatures.contains("340a9534"));
-    assert!(signatures.contains("6c5f90bb"));
+    let signatures = bytecode.find_function_selectors(false);
+    assert_eq!(signatures.len(), 1);
+    assert!(signatures.contains("ddc63262"));
 }
 
 #[test]
 fn it_does_not_find_signatures_when_none_exist() {
     let hex_no_signatures = "0x12345678".to_string();
     let bytecode = Bytecode::try_from(hex_no_signatures).unwrap();
-    let signatures = bytecode.find_function_selectors();
+    let signatures = bytecode.find_function_selectors(false);
     assert!(signatures.is_empty());
 }

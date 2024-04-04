@@ -7,7 +7,7 @@ use std::path::PathBuf;
 #[clap(version = crate::VERSION, author = "wavefnx @wavefnx")]
 #[clap(group(ArgGroup::new("input").args(&["address", "file"]).required(true)))]
 pub struct Config {
-    /// Export the signatures as a JSON file
+    /// Path to export the signatures as a JSON file
     #[clap(short = 'o', long, value_parser)]
     pub output: Option<PathBuf>,
 

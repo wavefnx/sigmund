@@ -49,7 +49,7 @@ A tool for quickly collecting function selectors and decoding signatures from on
 Usage: sigmund [OPTIONS] <--address <ADDRESS>|--file <FILE>>
 
 Options:
-  -o, --output <OUTPUT>    Export the signatures as a JSON file
+  -o, --output <OUTPUT>    Path to export the signatures as a JSON file
       --signatures         Collect all known function signatures from the contract's selectors
       --address <ADDRESS>  The address of the EVM contract
   -f, --file <FILE>        Path to a local file containing the contract's bytecode

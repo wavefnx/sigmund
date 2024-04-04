@@ -1,6 +1,6 @@
 [package]
 name = "sigmund"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 authors = ["wavefnx @wavefnx"]
 description = "A tool for collecting function selectors and decoding signatures from on-chain EVM bytecode."

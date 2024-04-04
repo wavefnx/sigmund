@@ -116,7 +116,7 @@ impl Sigmund {
         // Get the bytecode from the specified source
         let bytecode = self.get_bytecode().await.map_err(|e| e.to_string())?;
         // Extract function selectors from the bytecode
-        let selectors = bytecode.find_function_selectors();
+        let selectors = bytecode.find_function_selectors(self.config.deep);
 
         let signatures = if self.config.signatures {
             // Collect all signatures that exist in the database

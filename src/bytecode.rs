@@ -31,13 +31,13 @@ impl Bytecode {
     /// JUMPI
     /// ```
     #[inline]
-    pub fn find_function_selectors(&self) -> HashSet<String> {
+    pub fn find_function_selectors(&self, deep: bool) -> HashSet<String> {
         let mut selectors = HashSet::new();
         let selector_size = 5;
 
         for idx in 0..self.inner.len().saturating_sub(selector_size) {
             // since we use `saturating_sub(pattern_length)` the next `pattern_length` bytes will be available
-            if self.inner[idx] == 0x63 && self.inner[idx + selector_size] == 0x14 {
+            if self.inner[idx] == 0x63 && (deep || self.inner[idx + selector_size] == 0x14) {
                 selectors.insert(hex::encode(&self.inner[idx + 1..idx + selector_size]));
             }
         }

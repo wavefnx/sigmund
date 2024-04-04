@@ -23,6 +23,10 @@ pub struct Config {
     #[clap(short = 'f', long, value_parser)]
     pub file: Option<PathBuf>,
 
+    /// Collect all four-byte pushes (fn, err, ...), including non-selectors
+    #[clap(long, action = clap::ArgAction::SetTrue)]
+    pub deep: bool,
+
     /// Return all available signature matches for each selector
     #[clap(long, action = clap::ArgAction::SetTrue, requires = "signatures")]
     pub all_matches: bool,
